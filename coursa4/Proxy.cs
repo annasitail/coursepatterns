@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 
 namespace coursa4
 {
@@ -46,11 +45,6 @@ namespace coursa4
 
     class PersonalPage : Abstr_PersonalPage
     {
-        List<UserFlat> userFlats = new List<UserFlat>();
-        UserFlatTable userFlatTable = new UserFlatTable();
-        List<Flat> flats = new List<Flat>();
-        FlatTable flatTable = new FlatTable();
-
         public override void GetAccessToPersonalPage(User user)
         {
             bool status = true;
@@ -76,40 +70,6 @@ namespace coursa4
             }
             return;
         }
-
-        // private void ChooseFlatPage(User user)
-        // {
-        //     // UserFlat userFlat = new UserFlat();
-        //     Flat flat = new Flat();
-        //     this.userFlats = userFlatTable.GetByUserId(user.Id);
-        //     int flatsInTotal = userFlats.Count;
-        //     Console.WriteLine("Your flat(s):");
-
-        //     foreach(UserFlat uf in userFlats)
-        //     {
-        //         Console.WriteLine(flatTable.GetById(uf.flatId).ShortInfo());
-        //     }
-        //     if (flatsInTotal == 1)
-        //     {
-        //         Console.WriteLine("Enter 'more' for details");
-        //         if (Console.ReadLine() == "more")
-        //         {
-        //             Console.WriteLine(flatTable.GetById(userFlats.ToArray()[0].flatId));
-        //             Console.WriteLine("Choose team");
-        //             // State state = new State();
-        //             // state.StateMethod(user);
-        //         }
-        //     }
-        //     else
-        //     {
-        //         Console.WriteLine($"Enter '(1-{flatsInTotal}) more' for details");
-        //         if (Console.ReadLine().Split(' ')[1] == "more" &&  int.Parse(Console.ReadLine().Split(' ')[0]) <= flatsInTotal && int.Parse(Console.ReadLine().Split(' ')[0]) > 0)
-        //         {
-        //             Console.WriteLine(flatTable.GetById(userFlats.ToArray()[flatsInTotal - 1].flatId));
-        //             Console.WriteLine("Want to choose team?");
-        //         }
-        //     }
-        // }
     }
 
     class Checker : Abstr_PersonalPage

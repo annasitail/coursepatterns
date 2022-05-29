@@ -36,7 +36,6 @@ public class Flat
 
     public Flat() { }
 
-
     public Flat(int id, int flatNumber, int floorNumber, int houseNumber, int quantityOfRooms, int readinessPercentage, int totalSpace, string interiorType, string wallsDesign, string floorDesign, string furniture)
     {
         this.Id = id;

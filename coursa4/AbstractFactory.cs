@@ -21,7 +21,6 @@ namespace coursa4
             string choice = Console.ReadLine().ToLower();
             if (choice == "italian" || choice == "polish" || choice == "ukrainian")
             {
-                // return "Manufacturer: " + choice + "\n";
                 return choice;
             }
             else if (choice == "no")
