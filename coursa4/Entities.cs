@@ -4,15 +4,17 @@ public class User
     public int Id { get { return id; } set { if (value > 0) { id = value; } } }
     public string firstName;
     public string lastName;
+    public string Password { get; set; }
     public bool isInTheDatabase = false;
 
     public User() { }
 
-    public User(int id, string firstName, string lastName)
+    public User(int id, string firstName, string lastName, string password)
     {
         Id = id;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.Password = password;
     }
 
     public override string ToString()
@@ -33,10 +35,11 @@ public class Flat
     public string floorDesign;
     public string wallsDesign;
     public string furniture;
+    public bool isInTheDatabase = false;
 
     public Flat() { }
 
-    public Flat(int id, int flatNumber, int floorNumber, int houseNumber, int quantityOfRooms, int readinessPercentage, int totalSpace, string interiorType, string wallsDesign, string floorDesign, string furniture)
+    public Flat(int id, int flatNumber, int houseNumber, int quantityOfRooms, int readinessPercentage, string interiorType, string wallsDesign, string floorDesign, string furniture)
     {
         this.Id = id;
         this.flatNumber = flatNumber;
