@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.IO;
 using Microsoft.Data.Sqlite;
 
 public static class DatabaseConnection
@@ -26,12 +24,13 @@ public class UserTable
 
         SqliteCommand command = this.connection.CreateCommand();
         command.CommandText = 
-        @"INSERT INTO users (first_name, last_name, password)
-        VALUES ($first_name, $last_name, $password);
+        @"INSERT INTO users (first_name, last_name, phone, password)
+        VALUES ($first_name, $last_name, $phone, $password);
 
         SELECT last_insert_rowid();";
         command.Parameters.AddWithValue("$first_name", user.firstName);
         command.Parameters.AddWithValue("$last_name", user.lastName);
+        command.Parameters.AddWithValue("$phone", user.phoneNumber);
         command.Parameters.AddWithValue("$password", user.Password);
 
         long newId = (long)command.ExecuteScalar();
@@ -56,7 +55,8 @@ public class UserTable
             user.Id = int.Parse(reader.GetString(0));
             user.firstName = reader.GetString(1);
             user.lastName = reader.GetString(2);
-            user.Password = reader.GetString(3);
+            user.phoneNumber = int.Parse(reader.GetString(3));
+            user.Password = reader.GetString(4);
         }
         reader.Close();
         connection.Close();
@@ -83,7 +83,8 @@ public class UserTable
             user.Id = int.Parse(reader.GetString(0));
             user.firstName = reader.GetString(1);
             user.lastName = reader.GetString(2);
-            user.Password = reader.GetString(3);
+            user.phoneNumber = int.Parse(reader.GetString(3));
+            user.Password = reader.GetString(4);
         }
         reader.Close();
         connection.Close();
@@ -93,7 +94,6 @@ public class UserTable
 
 public class FlatTable
 {
-    List<Flat> flats = new List<Flat>();
     private SqliteConnection connection;
     public FlatTable()
     {
@@ -219,15 +219,13 @@ public class FlatTable
 
 public class UserFlatTable
 {
-    List<UserFlat> userFlats = new List<UserFlat>();
-    Flat flat = new Flat();
     private SqliteConnection connection;
     public UserFlatTable()
     {
         this.connection = DatabaseConnection.ConnectToDB();
     }
 
-    public void Add(int userId, int flatId)
+    public void Add(UserFlat userFlat)
     {
         connection.Open();
         SqliteCommand command = this.connection.CreateCommand();
@@ -237,8 +235,8 @@ public class UserFlatTable
 
         SELECT last_insert_rowid();";
 
-        command.Parameters.AddWithValue("$user_id", userId);
-        command.Parameters.AddWithValue("$flat_id", flatId);
+        command.Parameters.AddWithValue("$user_id", userFlat.userId);
+        command.Parameters.AddWithValue("$flat_id", userFlat.flatId);
 
         long newId = (long)command.ExecuteScalar();
         connection.Close();
@@ -259,8 +257,8 @@ public class UserFlatTable
         command.Parameters.AddWithValue("$user_id", userId);
 
         SqliteDataReader reader = command.ExecuteReader();
-        this.userFlats = new List<UserFlat>();
 
+        Flat flat = new Flat();
         if (reader.Read())
         {
             flat.Id = int.Parse(reader.GetString(0));;

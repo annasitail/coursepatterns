@@ -7,6 +7,24 @@ namespace coursa4
     {
         public string ChooseInteriorDesign()
         {
+            ShowInteriorDesign();
+
+            Console.WriteLine("Are you ready to choose one of them?\nEnter interion name make the choice\nOr enter 'no' to come back to your flat page");
+            string choice = Console.ReadLine().ToLower();
+            if (choice == "traditional" || choice == "contemporary" || choice == "industrial" || choice == "modern")
+            {
+                return choice;
+            }
+            else if (choice == "no")
+            {
+                return null;
+            }
+            Console.WriteLine("\nIncorrect value\nYou can enter only 'traditional'/'contemporary'/'industrial'/'modern' or 'no'\n");
+            return null;
+        }
+
+        private void ShowInteriorDesign()
+        {
             Console.WriteLine("Here you can see a list of interior designs for your flat:\n\n");
 
             DesignBuilder designBuilder;
@@ -27,19 +45,6 @@ namespace coursa4
             designBuilder = new Design4Builder();
             interior.OfferDesign(designBuilder);
             Console.WriteLine(designBuilder.Design.GetDesignInfo());
-
-            Console.WriteLine("Are you ready to choose one of them?\nEnter interion name make the choice\nOr enter 'no' to come back to your flat page");
-            string choice = Console.ReadLine().ToLower();
-            if (choice == "traditional" || choice == "contemporary" || choice == "inductrial" || choice == "modern")
-            {
-                return choice;
-            }
-            else if (choice == "no")
-            {
-                return null;
-            }
-            Console.WriteLine("\nIncorrect value\nYou can enter only 'yes' or 'no'\n");
-            return null;
         }
     }
 
@@ -49,7 +54,7 @@ namespace coursa4
         {
             designsBuilder.BuildMainMaterials();
             designsBuilder.BuildColorPalette();
-            designsBuilder.DistinguishingFeatures();
+            designsBuilder.BuildDistinguishingFeatures();
         }
     }
 
@@ -61,7 +66,7 @@ namespace coursa4
 
         public abstract void BuildMainMaterials();
         public abstract void BuildColorPalette();
-        public abstract void DistinguishingFeatures();
+        public abstract void BuildDistinguishingFeatures();
     }
 
     class Design1Builder : DesignBuilder
@@ -81,7 +86,7 @@ namespace coursa4
             design["color"] = "Neutral walls, warm, dark, gold & silver furnishings";
         }
 
-        public override void DistinguishingFeatures()
+        public override void BuildDistinguishingFeatures()
         {
             design["features"] = "Symmethrical, collumns, crown moulding, detailed woodwork";
         }
@@ -104,7 +109,7 @@ namespace coursa4
             design["color"] = "Brown, taupe, cream, white, black";
         }
 
-        public override void DistinguishingFeatures()
+        public override void BuildDistinguishingFeatures()
         {
             design["features"] = "Open space, uncluttered, airy, strong emphasis on line and form";
         }
@@ -127,7 +132,7 @@ namespace coursa4
             design["color"] = "Neutral shades – brown, tan, black, cream, grey";
         }
 
-        public override void DistinguishingFeatures()
+        public override void BuildDistinguishingFeatures()
         {
             design["features"] = "Open concept layout, high ceilings, exposed materials, \nuncluttered, functional, mix of old and new, negative space";
         }
@@ -150,7 +155,7 @@ namespace coursa4
             design["color"] = "Monochromatic, neutral, earthy";
         }
 
-        public override void DistinguishingFeatures()
+        public override void BuildDistinguishingFeatures()
         {
             design["features"] = "Clean lines, simple furnishings, lack of clutter & adornments, \n'form follows function'";
         }

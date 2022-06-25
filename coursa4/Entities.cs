@@ -4,16 +4,18 @@ public class User
     public int Id { get { return id; } set { if (value > 0) { id = value; } } }
     public string firstName;
     public string lastName;
+    public int phoneNumber;
     public string Password { get; set; }
     public bool isInTheDatabase = false;
 
     public User() { }
 
-    public User(int id, string firstName, string lastName, string password)
+    public User(int id, string firstName, string lastName, int phoneNumber, string password)
     {
-        Id = id;
+        this.Id = id;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.phoneNumber = phoneNumber;
         this.Password = password;
     }
 
@@ -54,12 +56,7 @@ public class Flat
 
     public override string ToString()
     {
-        return $"Flat №{this.flatNumber}: {this.readinessPercentage}% of readiness\nHouse: {this.houseNumber}\nRooms: {this.quantityOfRooms}\nInterior type: {this.interiorType}\nWalls design: {this.wallsDesign}\nFloor design:{this.floorDesign}\nFurniture manufacturer: {this.furniture}";
-    }
-
-    public string ShortInfo()
-    {
-        return $"Flat №{this.flatNumber}: {this.readinessPercentage}% of readiness\n";
+        return $"Flat №{this.flatNumber}: {this.readinessPercentage}% of readiness\nHouse: {this.houseNumber}\nRooms: {this.quantityOfRooms}\nInterior type: {this.interiorType}\nWalls design: {this.wallsDesign}\nFloor design: {this.floorDesign}\nFurniture manufacturer: {this.furniture}";
     }
 }
 
@@ -78,9 +75,4 @@ public class UserFlat
         this.userId = userId;
         this.flatId = flatId;
     }
-
-    // public override string ToString()
-    // {
-    //     return $"[{this.Id} - {this.userId} - {this.flatId}]";
-    // }
 }

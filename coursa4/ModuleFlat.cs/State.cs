@@ -4,7 +4,7 @@ namespace coursa4
 {
     class FlatPage
     {
-        public void MainFlatPage(int id)
+        public void GoToFlatPage(int id)
         {
             UserFlatTable userFlatTable = new UserFlatTable();
             Flat flat = new Flat();
@@ -49,7 +49,7 @@ namespace coursa4
                 while (statusInteriorChoice)
                 {
                     GetFlatPageView(this.flat);
-                    Console.WriteLine("\nChoose interior design\nEnter 'yes' to continue" + "\nOr 'no' to come back to your profile page"); // + "\nOr 'no' to come back to your profile page"
+                    Console.WriteLine("\nChoose interior design\nEnter 'yes' to continue\nOr 'no' to come back to your profile page");
                     string answer = Console.ReadLine().ToLower();
                     if (answer == "yes")
                     {

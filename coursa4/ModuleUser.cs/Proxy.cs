@@ -32,7 +32,7 @@ namespace coursa4
                 }
                 else 
                 {
-                    Console.WriteLine("\nIncorrect value\nYou can enter only 'log in' or 'exit'\n");
+                    Console.WriteLine("\nIncorrect value\nYou can enter only 'log in'/'sign in' or 'exit'\n");
                 }
             }
         }
@@ -45,7 +45,7 @@ namespace coursa4
             string lastName = Console.ReadLine();
             Console.WriteLine("Password: ");
             string password = Console.ReadLine();
-            User user = new User(0, firstName, lastName, password);
+            User user = new User(0, firstName, lastName, 0, password);
             Abstr_PersonalPage page = new LogInChecker();
             page.GetAccessToPersonalPage(user);
         }
@@ -58,6 +58,8 @@ namespace coursa4
                 string firstName = Console.ReadLine();
                 Console.WriteLine("Last Name: ");
                 string lastName = Console.ReadLine();
+                Console.WriteLine("Phone number: +380");
+                int phoneNumber = int.Parse(Console.ReadLine());
                 Console.WriteLine("Password: ");
                 string password = Console.ReadLine();
                 Console.WriteLine("Flat number: ");
@@ -66,17 +68,16 @@ namespace coursa4
                 int houseNumber = int.Parse(Console.ReadLine());
                 Console.WriteLine("Quantity of rooms: ");
                 int quantityOfRooms = int.Parse(Console.ReadLine());
-                User user = new User(0, firstName, lastName, password);
+                User user = new User(0, firstName, lastName, phoneNumber, password);
                 Flat flat = new Flat(0, flatNumber, houseNumber, quantityOfRooms, 0, "-", "-", "-", "-");
                 Abstr_PersonalPage page = new SignInChecker();
                 SignInChecker checker = new SignInChecker();
                 user = checker.CreateNewAccount(user, flat);
                 page.GetAccessToPersonalPage(user);
             }
-            catch (Exception ex)
+            catch
             {
-                Console.WriteLine("\nIncorrect value\nEnter numbers in fields:\n'flatNumber', 'houseNumber', 'quantityOfRooms'");
-                Console.WriteLine(ex);
+                Console.WriteLine("\nIncorrect value\nYou can enter only numbers in fields:\n'phone number', 'flat number', 'house number', 'quantity of rooms'\nPlease try again");
             }
         }
     }
@@ -100,7 +101,7 @@ namespace coursa4
                 if (choice == "flat")
                 {
                     FlatPage flatPage = new FlatPage();
-                    flatPage.MainFlatPage(user.Id);
+                    flatPage.GoToFlatPage(user.Id);
                 }
                 else if (choice == "exit")
                 {
@@ -152,12 +153,12 @@ namespace coursa4
         UserTable userTable = new UserTable();
         Flat flat = new Flat();
         FlatTable flatTable = new FlatTable();
+        UserFlat userFlat = new UserFlat();
         UserFlatTable userFlatTable = new UserFlatTable();
-        bool dataIsCorrect = false;
 
         public override void GetAccessToPersonalPage(User createdUser)
         {
-            if (this.dataIsCorrect)
+            if (createdUser != null)
             {
                 Console.WriteLine("\nSuccess!");
                 page.GetAccessToPersonalPage(createdUser);
@@ -175,12 +176,11 @@ namespace coursa4
             CheckIfFlatExists(flatToCheck);
             if (!this.user.isInTheDatabase && !this.flat.isInTheDatabase)
             {
-                int userId = (int)userTable.Add(userToCheck);
-                this.user = userTable.GetById(userId);
-                int flatId = (int)flatTable.Add(flatToCheck);
-                this.flat = flatTable.GetById(flatId);
-                userFlatTable.Add(userId, flatId);
-                this.dataIsCorrect = true;
+                this.userFlat.userId = (int)userTable.Add(userToCheck);
+                this.user = userTable.GetById(this.userFlat.userId);
+                this.userFlat.flatId = (int)flatTable.Add(flatToCheck);
+                this.flat = flatTable.GetById(this.userFlat.flatId);
+                userFlatTable.Add(this.userFlat);
                 return user;
             }
             return null;

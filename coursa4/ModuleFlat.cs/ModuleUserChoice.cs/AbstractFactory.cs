@@ -6,16 +6,7 @@ namespace coursa4
     {
         public string ChooseFurniture()
         {
-            Console.WriteLine("Here is a list of furniture:");
-            Console.WriteLine("\nFrom Italian manufacturer:");
-            ManufacturerFactory factory = new Manufacturer1();
-            Items items1 = new Items(factory);
-            Console.WriteLine("\nFrom Polish manufacturer:");
-            factory = new Manufacturer2();
-            Items items2 = new Items(factory);
-            Console.WriteLine("\nFrom Ukrainian manufacturer:");
-            factory = new Manufacturer3();
-            Items items3 = new Items(factory);
+            ShowFurniture();
 
             Console.WriteLine("\nAre you ready to choose a manufacturer?\nEnter its name ('italian'/'polish'/'ukrainian')\nOr enter 'no' to come back to your flat page");
             string choice = Console.ReadLine().ToLower();
@@ -27,8 +18,23 @@ namespace coursa4
             {
                 return null;
             }
-            Console.WriteLine("\nIncorrect value\nYou can enter only 'italian'/'polish'/'ukrainian' or 'no'");
+            Console.WriteLine("\nIncorrect value\nYou can enter only 'italian'/'polish'/'ukrainian' or 'no'\n");
             return null;
+        }
+
+        private void ShowFurniture()
+        {
+            Console.WriteLine("Here is a list of furniture:");
+
+            Console.WriteLine("\nFrom Italian manufacturer:");
+            ManufacturerFactory factory = new Manufacturer1();
+            Items items1 = new Items(factory);
+            Console.WriteLine("\nFrom Polish manufacturer:");
+            factory = new Manufacturer2();
+            Items items2 = new Items(factory);
+            Console.WriteLine("\nFrom Ukrainian manufacturer:");
+            factory = new Manufacturer3();
+            Items items3 = new Items(factory);
         }
     }
     abstract class ManufacturerFactory
