@@ -99,7 +99,7 @@ namespace coursa4
                 while (statusWallsChoice)
                 {
                     GetFlatPageView(this.flat);
-                    Console.WriteLine("\nChoose walls design\nEnter 'yes' to continue\nOr 'no' to come back to your profile page");
+                    Console.WriteLine("\nChoose walls design\nEnter 'yes' to continue\nType 'back' to get to the previous part\nOr 'no' to come back to your profile page");
                     string answer = Console.ReadLine().ToLower();
                     if (answer == "yes")
                     {
@@ -116,6 +116,14 @@ namespace coursa4
                             flatTable.Update(this.flat);
                             statusWallsChoice = false;
                         }
+                    }
+                    else if (answer == "back")
+                    {
+                        FlatTable flatTable = new FlatTable();
+                        this.flat.readinessPercentage -= 25;
+                        flatTable.Update(this.flat);
+                        context.State = new ChooseInteriorState(this.flat);
+                        statusWallsChoice = false;
                     }
                     else if (answer == "no")
                     {
@@ -149,7 +157,7 @@ namespace coursa4
                 while (statusFloorChoice)
                 {
                     GetFlatPageView(this.flat);
-                    Console.WriteLine("\nChoose floor design\nEnter 'yes' to continue\nOr 'no' to come back to your profile page");
+                    Console.WriteLine("\nChoose floor design\nEnter 'yes' to continue\nType 'back' to get to the previous part\nOr 'no' to come back to your profile page");
                     string answer = Console.ReadLine().ToLower();
                     if (answer == "yes")
                     {
@@ -166,6 +174,14 @@ namespace coursa4
                             flatTable.Update(this.flat);
                             statusFloorChoice = false;
                         }
+                    }
+                    else if (answer == "back")
+                    {
+                        FlatTable flatTable = new FlatTable();
+                        this.flat.readinessPercentage -= 25;
+                        flatTable.Update(this.flat);
+                        context.State = new ChooseWallsState(this.flat);
+                        statusFloorChoice = false;
                     }
                     else if (answer == "no")
                     {
@@ -195,11 +211,11 @@ namespace coursa4
             int percentage = this.flat.readinessPercentage;
             if (percentage >= 75 && percentage < 100)
             {
-                bool statusFloorChoice = true;
-                while (statusFloorChoice)
+                bool statusInteriorChoice = true;
+                while (statusInteriorChoice)
                 {
                     GetFlatPageView(this.flat);
-                    Console.WriteLine("\nChoose furniture\nEnter 'yes' to continue\nOr 'no' to come back to your profile page");
+                    Console.WriteLine("\nChoose furniture\nEnter 'yes' to continue\nType 'back' to get to the previous part\nOr 'no' to come back to your profile page");
                     string answer = Console.ReadLine().ToLower();
                     if (answer == "yes")
                     {
@@ -215,8 +231,16 @@ namespace coursa4
                             this.flat.furniture = result;
                             this.flat.readinessPercentage += 25;
                             flatTable.Update(this.flat);
-                            statusFloorChoice = false;
+                            statusInteriorChoice = false;
                         }
+                    }
+                    else if (answer == "back")
+                    {
+                        FlatTable flatTable = new FlatTable();
+                        this.flat.readinessPercentage -= 25;
+                        flatTable.Update(this.flat);
+                        context.State = new ChooseFloorState(this.flat);
+                        statusInteriorChoice = false;
                     }
                     else if (answer == "no")
                     {
@@ -248,9 +272,16 @@ namespace coursa4
             {
                 GetFlatPageView(this.flat);
                 Console.WriteLine("\nYour flat is ready\nCongradulations!");
-                Console.WriteLine("\nEnter 'exit' to come back to your profile page");
+                Console.WriteLine("\nEnter 'exit' to come back to your profile page\nOr type 'back' to get to the previous part");
                 string answer = Console.ReadLine().ToLower();
-                if (answer != "exit")
+                if (answer == "back")
+                {
+                    FlatTable flatTable = new FlatTable();
+                    this.flat.readinessPercentage -= 25;
+                    flatTable.Update(this.flat);
+                    context.State = new ChooseFurnitureState(this.flat);
+                }
+                else if (answer != "exit")
                 {
                     Console.WriteLine("\nIncorrect value, try again");
                     return true;
